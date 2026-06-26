@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --marquee-duration: 32s;
+  }
+
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 88px;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: #2d5bff;
+    color: #fffbf5;
+  }
+
+  /* Focus visibility for keyboard users */
+  :focus-visible {
+    outline: 3px solid #2d5bff;
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
+
+  /* Custom scrollbar (desktop) */
+  ::-webkit-scrollbar {
+    width: 12px;
+    height: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #fbf3e4;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #0b0b12;
+    border: 3px solid #fbf3e4;
+    border-radius: 999px;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-5 sm:px-8;
+  }
+
+  /* The grain/noise atmosphere overlay */
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    background-image: theme('backgroundImage.grain');
+    background-size: 160px 160px;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .text-gradient {
+    background: linear-gradient(90deg, #2d5bff, #ff4f8b 45%, #ffc53d);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Pill / chip */
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-xs font-semibold tracking-wide;
+  }
+
+  /* Marquee track helper: duplicate children for a seamless loop */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee var(--marquee-duration) linear infinite;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@layer utilities {
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  .glass {
+    background: rgba(255, 251, 245, 0.7);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .glass-dark {
+    background: rgba(11, 11, 18, 0.55);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
